@@ -1,0 +1,18 @@
+apiVersion: apps/v1beta2 # before 1.9
+kind: Deployment
+metadata:
+  namespace: api
+  name: elt-smartsheets
+spec:
+  selector:
+    matchLabels:
+      app: elt-smartsheets
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: elt-smartsheets
+    spec:
+      containers:
+      - name: elt-smartsheets
+        image: matthewberryhill/elt-smartsheets:pre
