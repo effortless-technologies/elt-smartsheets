@@ -6,8 +6,8 @@ app = Flask(__name__)
 access_token = "8iorlqtxib1xix8xsrh4tnbwmq"
 
 
-@app.route('/sheet')
-def sheet():
+@app.route('/sheets')
+def sheets():
 
     resp = ss_client.Sheets.list_sheets()
 
@@ -32,13 +32,13 @@ def properties():
 
     resp['schema'] = schema
 
-    payload = list()
+    payload = dict()
     for i, row in enumerate(rows):
         item = dict()
         for j, cell in enumerate(row.cells):
             item[str(cell._column_id)] = cell._value
 
-        payload.append(item)
+        payload[row.id] = item
 
     resp['payload'] = payload
 
