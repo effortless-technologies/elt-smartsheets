@@ -1,8 +1,16 @@
-from flask import Flask
+from flask import Flask, Response
+from flask_cors import CORS, cross_origin
 import smartsheet, json
 
 
 app = Flask(__name__)
+CORS(app)
+app.config['SECRET_KEY'] = 'the quick brown fox jumps over the lazy   dog'
+app.config['CORS_HEADERS'] = 'Content-Type'
+cors = CORS(
+    app, resources={r"/properties": {"origins": "*"}})
+
+
 access_token = "8iorlqtxib1xix8xsrh4tnbwmq"
 
 
@@ -14,7 +22,8 @@ def sheets():
     return resp.to_json()
 
 
-@app.route('/properties')
+@app.route('/properties', methods=["GET"])
+@cross_origin('*')
 def properties():
     
     sheet = ss_client.Sheets.get_sheet(2398906471475076)
@@ -90,4 +99,4 @@ if __name__ == '__main__':
     ss_client = smartsheet.Smartsheet(access_token)
     ss_client.errors_as_exceptions(True)
 
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True, host='0.0.0.0', threaded=True)
