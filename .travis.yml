@@ -3,16 +3,24 @@ language: python
 python:
   - "3.6"
 
+# todo: HERE IS WHERE I LEFT OFF
+
 cache:
   - pip
+
+cache:
   directories:
     -s "$HOME/coding/google-cloud-sdk"pip
 
 install:
   - pip install -r ./api/requirements.txt
+  - docker build -t tester/build ./api
 
 script:
   - echo "Implement tests"
 
-deplpy:
+deploy:
   # todo: Implement
+
+notifications:
+  slack: effortlessrental:W1T5KZKXVJXg9WraZTGx0VDh
