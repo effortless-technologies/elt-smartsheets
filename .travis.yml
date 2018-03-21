@@ -12,6 +12,20 @@ cache:
   directories:
     -s "$HOME/coding/google-cloud-sdk"pip
 
+env:
+  global:
+    - GOOGLE_APPLICATION_CREDENTIALS-~/.gcloud-service-key.json
+    - PROJECT_NAME=loyal-bounty-183420
+    - CLUSTER_NAME=elt-prod
+    - CLOUDSDK_COMPUTE_ZONE=us-central1-a
+
+before_install:
+  - if [ ! -d "$HOME/google-cloud-sdk/bin" ]; then rm -rf $HOME/google-cloud-sdk; export CLOUDSDK_CORE_DISABLE_PROMPTS=1; curl https://sdk.cloud.google.com | bash; fi
+  - source /home/travis/google-cloud-sdk/path.bash.inc
+  - gcloud --quiet version
+  - gcloud --quiet components update
+  - gcloud --quiet components update beta
+
 install:
   - pip install -r ./api/requirements.txt
   - docker build -t tester/build ./api
@@ -19,8 +33,15 @@ install:
 script:
   - echo "Implement tests"
 
+before_deploy:
+  - gcloud --quiet components update kubectl
+
 deploy:
-  # todo: Implement
+  - provider: script
+    script: ./resources/deploy.sh
+    skip_cleanup: true
+    on:
+      branch: master
 
 notifications:
   slack: effortlessrental:W1T5KZKXVJXg9WraZTGx0VDh
