@@ -46,10 +46,10 @@ def properties():
         item = dict()
         for j, cell in enumerate(row.cells):
             item[str(cell._column_id)] = cell._value
-
         payload[row.id] = item
 
     resp['payload'] = payload
+    resp['count'] = len(payload)
 
     return json.dumps(resp)
 
