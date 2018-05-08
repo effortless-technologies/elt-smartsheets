@@ -95,7 +95,7 @@ def port():
         param_dict['param_value'] = param_value
         param_array.append(param_dict)
 
-    uri = 'http://104.197.53.226:7001/restricted/properties'
+    uri = 'http://35.184.148.221:7001/restricted/properties'
 
     resp = requests.get(
         url=uri,
@@ -118,7 +118,7 @@ def port():
     for i, ua in enumerate(update_array):
         if ua['param_name'] != None:
             data = {ua['param_name']: ua['param_value']}
-            uri = 'http://104.197.53.226:7001/restricted/properties/' \
+            uri = 'http://35.184.148.221:7001/restricted/properties/' \
                   + ua['property_id']
 
             headers = {
