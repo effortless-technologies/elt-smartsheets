@@ -13,8 +13,8 @@ cors = CORS(app, resources={r"/properties": {"origins": "*"}})
 access_token = "8iorlqtxib1xix8xsrh4tnbwmq"
 
 token = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbiI6dHJ1ZSwiZ' \
-        'XhwIjoxNTI1MjgyNTkzLCJmcmFuY2hpc2VfaWQiOjAsIm5hbWUiOiIiLCJyb2xlIj' \
-        'oiIn0.W4hoh0PCbIeh2ckzsM4koBUHI5FJxfMZTZgB70uga_Y'
+        'XhwIjoxNTI2NDAyMjAzLCJmcmFuY2hpc2VfaWQiOjAsIm5hbWUiOiIiLCJyb2xlIj' \
+        'oiIn0.aiMBSdrlpR_XdmJsiDcvAMd4isp5IVUhUgw_kHJVA0o'
 
 
 @app.route('/sheets')
@@ -95,7 +95,7 @@ def port():
         param_dict['param_value'] = param_value
         param_array.append(param_dict)
 
-    uri = 'http://35.184.148.221:7001/restricted/properties'
+    uri = 'http://104.197.53.226:7001/restricted/properties'
 
     resp = requests.get(
         url=uri,
@@ -104,6 +104,7 @@ def port():
 
     update_array = list()
     properties = json.loads(resp.content)
+    print(properties)
     for i, p in enumerate(properties):
         for ii, pp in enumerate(param_array):
             if p['lodgix_id'] == pp['lodgix_id']:
@@ -117,7 +118,7 @@ def port():
     for i, ua in enumerate(update_array):
         if ua['param_name'] != None:
             data = {ua['param_name']: ua['param_value']}
-            uri = 'http://35.184.148.221:7001/restricted/properties/' \
+            uri = 'http://104.197.53.226:7001/restricted/properties/' \
                   + ua['property_id']
 
             headers = {
